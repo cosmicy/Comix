@@ -214,7 +214,7 @@ class _MainFileChooserDialog(_ComicFileChooserDialog):
             except:
                 pass
             _close_main_filechooser_dialog()
-            self._window.file_handler.open_file(paths[0])
+            self._window.file_handler.open_file(unicode(paths[0]))
         else:
             _close_main_filechooser_dialog()
 
