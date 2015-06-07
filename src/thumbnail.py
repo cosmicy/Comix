@@ -44,7 +44,7 @@ def get_thumbnail(path, create=True, dst_dir=_thumbdir):
     """
     thumbpath = _path_to_thumbpath(path, dst_dir)
     if not os.path.exists(thumbpath):
-        return _get_new_thumbnail(path, create, dst_dir)
+        return _get_new_thumbnail(path.encode('utf-8'), create, dst_dir)
     try:
         info = Image.open(thumbpath).info
         try:
@@ -82,7 +82,7 @@ def _get_new_thumbnail(path, create, dst_dir):
             return _get_new_archive_thumbnail(path, dst_dir)
         return None
     if create:
-        return _create_thumbnail(path, dst_dir)
+        return _create_thumbnail(path.encode('utf-8'), dst_dir)
     return _get_pixbuf128(path)
 
 
@@ -143,7 +143,7 @@ def _create_thumbnail(path, dst_dir, image_path=None):
     mime = mime['mime_types'][0]
     uri = 'file://' + pathname2url(os.path.normpath(path))
     thumbpath = _uri_to_thumbpath(uri, dst_dir)
-    stat = os.stat(path)
+    stat = os.stat(unicode(path))
     mtime = str(int(stat.st_mtime))
     size = str(stat.st_size)
     width = str(width)

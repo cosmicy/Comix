@@ -277,9 +277,9 @@ class FileHandler:
             self._base_path = dir_path if dir_path else os.path.dirname(path)
             # Not necessary to sort *all* of it, but whatever.
             for f in list_dir_sorted(self._base_path):
-                fpath = os.path.join(self._base_path, f)
+                fpath = unicode(os.path.join(self._base_path, f))
                 if is_image_file(fpath):
-                    self._image_files.append(fpath)
+                    self._image_files.append(fpath.encode('utf-8'))
             if dir_path:
                 self._redo_priority_ordering(start_page, self._image_files)
             else:
@@ -331,7 +331,7 @@ class FileHandler:
         self._window.cursor_handler.set_cursor_type(cursor.NORMAL)
         self._window.ui_manager.set_sensitivities()
         self._window.new_page()
-        self._window.ui_manager.recent.add(path)
+        self._window.ui_manager.recent.add(path.encode('utf-8'))
 
     def _redo_priority_ordering(self, start_page, list):
         if start_page <= 0:
@@ -522,7 +522,7 @@ class FileHandler:
         self._wait_on_page(page)
         path = self.get_path_to_page(page)
         if width <= 128 and height <= 128:
-            thumb = thumbnail.get_thumbnail(path, create)
+            thumb = thumbnail.get_thumbnail(path.encode('utf-8'), create)
         else:
             try:
                 if "gif" not in path[-3:].lower():
